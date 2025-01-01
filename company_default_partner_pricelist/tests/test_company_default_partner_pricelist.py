@@ -26,15 +26,15 @@ class TestCompanyDefaultPartnerPricelist(common.TransactionCase):
         # When the default is changed for the active company, the pricelist of
         # the partner is the one assigned to the current company
         self.env.company.default_property_product_pricelist = self.pricelist_2
-        self.partner.invalidate_cache()
+        self.partner.invalidate_recordset()
         self.assertEqual(self.partner.property_product_pricelist, self.pricelist_2)
 
         self.env.company.default_property_product_pricelist = self.pricelist_3
-        self.partner.invalidate_cache()
+        self.partner.invalidate_recordset()
         self.assertEqual(self.partner.property_product_pricelist, self.pricelist_3)
 
         self.env.company.default_property_product_pricelist = False
-        self.partner.invalidate_cache()
+        self.partner.invalidate_recordset()
         self.assertEqual(self.partner.property_product_pricelist, self.base_pricelist)
 
         # Finally, when modified explicitly, the pricelist is the one
