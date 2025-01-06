@@ -19,11 +19,11 @@ msgid "Companies"
 msgstr ""
 
 #. module: company_default_partner_pricelist
-#: model:ir.model.fields,field_description:company_default_partner_pricelist.field_res_company__default_property_product_pricelist
+#: model:ir.model.fields,field_description:company_default_partner_pricelist.field_res_company__default_property_product_pricelist_id
 msgid "Default Account Pricelist"
 msgstr ""
 
 #. module: company_default_partner_pricelist
-#: model:ir.model.fields,help:company_default_partner_pricelist.field_res_company__default_property_product_pricelist
+#: model:ir.model.fields,help:company_default_partner_pricelist.field_res_company__default_property_product_pricelist_id
 msgid "Default pricelist for this company for new partners."
 msgstr ""

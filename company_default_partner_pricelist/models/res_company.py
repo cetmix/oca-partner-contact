@@ -6,7 +6,7 @@ from odoo import fields, models
 class ResCompany(models.Model):
     _inherit = "res.company"
 
-    default_property_product_pricelist = fields.Many2one(
+    default_property_product_pricelist_id = fields.Many2one(
         "product.pricelist",
         string="Default Account Pricelist",
         help="Default pricelist for this company for new partners.",
@@ -14,12 +14,12 @@ class ResCompany(models.Model):
 
     def _update_partner_pricelist_generic_property(self):
         self.ensure_one()
-        default_property_pp = self.default_property_product_pricelist
-        ir_property = self.env["ir.property"]
+        default_property_pp = self.default_property_product_pricelist_id
+        ir_property_obj = self.env["ir.property"].sudo()
         field = self.env["ir.model.fields"]._get(
             "res.partner", "property_product_pricelist"
         )
-        ppty = ir_property.sudo().search(
+        ppty = ir_property_obj.sudo().search(
             [
                 ("name", "=", "property_product_pricelist"),
                 ("company_id", "=", self.id),
@@ -36,7 +36,7 @@ class ResCompany(models.Model):
                     {"value_reference": "product.pricelist,%s" % default_property_pp.id}
                 )
         elif default_property_pp:
-            ir_property.sudo().create(
+            ir_property_obj.sudo().create(
                 {
                     "name": "property_product_pricelist",
                     "value_reference": "product.pricelist,%s" % default_property_pp.id,
@@ -47,13 +47,13 @@ class ResCompany(models.Model):
 
     def create(self, vals):
         res = super(ResCompany, self).create(vals)
-        if "default_property_product_pricelist" in vals:
+        if "default_property_product_pricelist_id" in vals:
             res._update_partner_pricelist_generic_property()
         return res
 
     def write(self, vals):
         res = super(ResCompany, self).write(vals)
-        if "default_property_product_pricelist" in vals:
+        if "default_property_product_pricelist_id" in vals:
             for rec in self:
                 rec._update_partner_pricelist_generic_property()
         return res
